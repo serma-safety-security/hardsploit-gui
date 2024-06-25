@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "hardsploit-gui"
+version = "0.1.0"
+description = "QT graphical interface for Hardsploit HW access"
+authors = ["PERIES Mickaël <m.peries@serma.com>", "DUMAN Mazlum, <m.duman@serma.com>"]
+license = "LGPL-3.0-only"
+readme = "README.md"
+homepage = "https://github.com/serma-safety-security/hardsploit_gui"
+documentation = "https://github.com/serma-safety-security/hardsploit_gui/wiki"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+    "Operating System :: OS Independent",
+]
+packages = [
+    {include = "hardsploit_gui"}
+]
+
+exclude = [".gitignore"]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.13"
+peewee = "^3.16"
+PySide6 = "^6.5"
+hardsploit = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+hardsploit = "hardsploit_gui.main:HardsploitGUI"
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/serma-safety-security/hardsploit/issues"
+
