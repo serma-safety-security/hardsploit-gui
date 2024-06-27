@@ -20,8 +20,8 @@ exclude = [".gitignore"]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.13"
-peewee = "^3.16"
-PySide6 = "^6.5"
+peewee = "^3.17"
+PySide6 = "^6.7"
 hardsploit = "*"
 
 [build-system]
