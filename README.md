@@ -17,7 +17,8 @@
   </div>
   <br>
   <div align="center">
-    <img src="./Images/hs_board.png" alt="Board hardsploit" height="250">
+    <img src="https://github.com/serma-safety-security/hardsploit-gui/assets/139353343/27e4db6d-98cf-4aae-9527-f133fa3bbfe6" alt="Board hardsploit" height="250">
+
   </div>
   <br>
 
@@ -59,7 +60,7 @@
         <h2>About the project</h2>
         <p>Hardsploit is an innovative hardware security testing platform designed to aid security researchers, engineers, and auditors in analyzing and evaluating the security of hardware devices.</p>
         <p>Featuring a modular design, Hardsploit supports various interfaces like JTAG, SPI, I2C, and UART, allowing for extensive hardware testing and reverse engineering.</p>
-        <div align="center"><img src="./Images/schema.png" width="300"></div>
+        <div align="center"><img src="https://github.com/serma-safety-security/hardsploit-gui/assets/139353343/5db214c1-114f-4e84-8d0b-0e792068805a" width="300"></div>
         <div>
           <div>
             <h4>Main security audit functions:</h4>
@@ -91,7 +92,8 @@
           </div>
           <br>
           <div align="center" >
-            <img src="./Images/chip_management.png" width="500">
+            <img src="https://github.com/serma-safety-security/hardsploit-gui/assets/139353343/d6212525-a5b3-4313-8ea3-567add4ffcb3" width="500">
+
           </div>
         </div>
       </td>
