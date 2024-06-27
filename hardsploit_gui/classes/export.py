@@ -31,7 +31,7 @@ class Exportdata(QWidget):
 
     @Slot()
     def export_data(self, chip_reference=None):
-        if self.file_path is not None:
+        if self.file_path is not None and self.file_path != "":
             with open(f"{self.file_path}.json", 'w') as self.file:
                 self.file.write("{\n")
                 self.file.write('"chips":{\n')
