@@ -93,7 +93,6 @@
           <br>
           <div align="center" >
             <img src="https://github.com/serma-safety-security/hardsploit-gui/assets/139353343/d6212525-a5b3-4313-8ea3-567add4ffcb3" width="500">
-
           </div>
         </div>
       </td>
@@ -204,7 +203,7 @@
 <a name="migration"></a>
 <div>
   <h2>Migration guide</h2>
-  <img src="./Images/migration.png" alt="">
+  <img src="https://github.com/serma-safety-security/hardsploit-gui/assets/139353343/06e3967f-b634-4e81-9f50-72665f45ab00" alt="">
   <ol>
     <li>Click on the import button (or ctrl + V)</li>
     <li>Choose the old database (.sqlite3 file)</li>
