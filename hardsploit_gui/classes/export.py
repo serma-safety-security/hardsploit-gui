@@ -107,9 +107,10 @@ class Exportdata(QWidget):
         self.file.write("\t\t]\n")
 
     def export_commands(self, file, chip_reference):
-        if chip_reference is None:
+        if not chip_reference:
             commands = list(Command.select())
         else:
+            print(f"test : {chip_reference}")
             chip_id = Chip.select().where(Chip.reference == chip_reference).get().id
             commands = list(Command.select().where(Command.chip_id == chip_id))
         file.write('"commands": {\n')
