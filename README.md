@@ -143,7 +143,7 @@
       <h3>Install the Hardsploit api!</h3>
       <ol>
         <li>
-          <p>Clone <a href="">Hardsploit Api</a>.</p>
+          <p>Clone <a href="https://github.com/serma-safety-security/hardsploit">Hardsploit Api</a>.</p>
           <code>git clone "https://github.com/serma-safety-security/hardsploit.git"</code>
         </li>
         <br>
@@ -169,7 +169,7 @@
       <h3>Install the Hardsploit gui</h3>
       <ol>
         <li>
-          <p>Clone <a href="">Hardsploit GUI</a>.</p>
+          <p>Clone <a href="https://github.com/serma-safety-security/hardsploit-gui">Hardsploit GUI</a>.</p>
           <code>git clone "https://github.com/serma-safety-security/hardsploit-gui.git"</code>
         </li>
         <br>
