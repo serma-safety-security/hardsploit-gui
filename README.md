@@ -144,7 +144,7 @@
       <ol>
         <li>
           <p>Clone <a href="">Hardsploit Api</a>.</p>
-          <code>git clone "https://gitlabs3.serma.com/serma_s3_iec/produits-s3/hardsploitv1-python/hardsploit-gui.git"</code>
+          <code>git clone "https://github.com/serma-safety-security/hardsploit.git"</code>
         </li>
         <br>
         <li>
@@ -170,7 +170,7 @@
       <ol>
         <li>
           <p>Clone <a href="">Hardsploit GUI</a>.</p>
-          <code>git clone ""</code>
+          <code>git clone "https://github.com/serma-safety-security/hardsploit-gui.git"</code>
         </li>
         <br>
         <li>
