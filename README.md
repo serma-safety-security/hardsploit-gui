@@ -232,6 +232,6 @@
 <a name="license"></a>
 <div>
   <h2>License</h2>
-  <p>Hardsploit is licensed under *LGPLv3*. See the <a href="http://test.fr">LICENSE</a> file for more information.</p>
+  <p>Hardsploit is licensed under *LGPLv3*. See the <a href="https://github.com/serma-safety-security/hardsploit-gui/blob/main/LICENSE">LICENSE</a> file for more information.</p>
 </div>
 
