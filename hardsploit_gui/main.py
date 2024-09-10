@@ -10,7 +10,7 @@ from hardsploit.core import HardsploitAPI
 
 
 class HardsploitGUI:
-    VERSION = "0.1.0"
+    VERSION = "2.0.0"
     currentFirmware = None
     LOG_FILE_PATH = str(Path(__file__).parent.resolve()) + "/logs/error.log"
     DB_FILE_PATH = str(Path(__file__).parent.resolve()) + "/db/hardsploit.db"
