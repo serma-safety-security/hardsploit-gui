@@ -1,6 +1,5 @@
 """firmware.py"""
 
-import os
 from pathlib import Path
 from time import sleep
 
@@ -21,29 +20,34 @@ class Firmware:
             ErrorMsg.hardsploit_not_found()
         else:
             if HardsploitGUI.currentFirmware != firmware:
-                if HardsploitGUI.currentFirmware != 'uC':
-                    utils.progress_bar = ProgressBar("Upload firmware :")
-                    utils.progress_bar.show()
-                if firmware in ['I2C', 'I2C_SNIFFER', 'SPI', 'SPI_SNIFFER', 'PARALLEL', 'MUX_PARALLEL', 'SWD', 'UART',
-                                'CAN', 'CAN_INTERACT']:
-                    hardsploit_api.load_firmware(firmware)
-                elif firmware == 'uC':
+                if firmware == 'uC':
+                    if not hardsploit_api.dfu:
+                        QMessageBox(QMessageBox.Warning, 'Microcontroller update',
+                                    'Board is not in DFU/bootloader mode.\n'
+                                    'Set the DFU jumper pins and restart the board to proceed.'
+                                    ).exec_()
+                        return
                     msg = QMessageBox()
                     msg.setWindowTitle("Microcontroller update")
-                    msg.setText("Hardsploit must be in bootloader mode and dfu-util package must be installed in order"
-                                " to continue. Proceed ?")
+                    msg.setText("Hardsploit is in bootloader mode. Flash uC firmware now?")
                     msg.setIcon(QMessageBox.Question)
                     msg.setStandardButtons(QMessageBox.Cancel | QMessageBox.Ok)
                     msg.setDefaultButton(QMessageBox.Cancel)
                     if msg.exec_() == QMessageBox.Ok:
-                        os.system("dfu-util -D 0483:df11 -a 0 -s 0x08000000 -R --download " + str(
-                            Path(__file__)) + "'/../Firmwares/UC/HARDSPLOIT_FIRMWARE_UC.bin'")
-                if firmware != 'uC':
+                        utils.progress_bar = ProgressBar("Flashing uC firmware :")
+                        utils.progress_bar.show()
+                        hardsploit_api.load_firmware('uC')
+                        utils.progress_bar.close()
+                elif firmware in ['I2C', 'I2C_SNIFFER', 'SPI', 'SPI_SNIFFER', 'PARALLEL', 'MUX_PARALLEL', 'SWD', 'UART',
+                                  'CAN', 'CAN_INTERACT']:
+                    utils.progress_bar = ProgressBar("Upload firmware :")
+                    utils.progress_bar.show()
+                    hardsploit_api.load_firmware(firmware)
                     if firmware == "SPI_SNIFFER":
                         firmware = "SPI"
                     HardsploitGUI.currentFirmware = firmware
-                utils.progress_bar.close()
-                sleep(2)
+                    utils.progress_bar.close()
+                    sleep(2)
             if firmware in ['PARALLEL', 'SWD', 'UART', 'I2C', 'SPI']:
                 # CrossWiring
                 crossvalue = []
