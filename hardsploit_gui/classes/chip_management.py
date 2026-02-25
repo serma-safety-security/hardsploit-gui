@@ -3,7 +3,8 @@
 import os
 import platform
 
-import usb
+import usb.core
+import libusb_package
 from PySide6.QtCore import Slot, Qt, QTimer
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtWidgets import QMainWindow, QLabel, QMessageBox, QApplication
@@ -48,9 +49,14 @@ class ChipManagement(QMainWindow):
 
     def set_hs_board_status(self, connected):
         if connected:
-            self.hardsploit_board_status.setText("Hardsploit board: connected " +
-                                                 f"- version {self.tabs.currentWidget()._api.get_version_number()} " +
-                                                 f"- api V{HardsploitConstant.VERSION.API}")
+            api = self.tabs.currentWidget()._api
+            if api.dfu:
+                self.hardsploit_board_status.setText("Hardsploit board: connected (DFU/bootloader mode) " +
+                                                     f"- api V{HardsploitConstant.VERSION.API}")
+            else:
+                self.hardsploit_board_status.setText("Hardsploit board: connected " +
+                                                     f"- version {api.get_version_number()} " +
+                                                     f"- api V{HardsploitConstant.VERSION.API}")
         else:
             self.hardsploit_board_status.setText("Hardsploit board: disconnected")
 
@@ -93,11 +99,19 @@ class ChipManagement(QMainWindow):
     @Slot()
     def get_hardsploit_versions(self):
         if HardsploitUtils.get_number_of_board_available() > 0:
-            QMessageBox(QMessageBox.Information, 'Hardsploit versions',
-                        f"GUI VERSION : {self.versionGUI}\n" +
-                        f"API VERSION : {HardsploitConstant.VERSION.API}\n" +
-                        f"BOARD : {self.tabs.currentWidget()._api.get_version_number()}"
-                        ).exec_()
+            api = self.tabs.currentWidget()._api
+            if api.dfu:
+                QMessageBox(QMessageBox.Information, 'Hardsploit versions',
+                            f"GUI VERSION : {self.versionGUI}\n" +
+                            f"API VERSION : {HardsploitConstant.VERSION.API}\n" +
+                            f"BOARD : DFU/bootloader mode"
+                            ).exec_()
+            else:
+                QMessageBox(QMessageBox.Information, 'Hardsploit versions',
+                            f"GUI VERSION : {self.versionGUI}\n" +
+                            f"API VERSION : {HardsploitConstant.VERSION.API}\n" +
+                            f"BOARD : {api.get_version_number()}"
+                            ).exec_()
         else:
             QMessageBox(QMessageBox.Information, 'Hardsploit versions',
                         f"GUI VERSION : {self.versionGUI}\n" +
@@ -161,9 +175,13 @@ class ChipManagement(QMainWindow):
         # Remove the 2 auto generated default Tab
         self.tabs.removeTab(0)
         self.tabs.removeTab(0)
-        devices = list(usb.core.find(idVendor=0x0483, idProduct=0xFFFF, find_all=True))
-        if len(devices) == 0:
+        backend = libusb_package.get_libusb1_backend()
+        normal_devices = list(usb.core.find(idVendor=0x0483, idProduct=0xFFFF, find_all=True, backend=backend))
+        dfu_devices = list(usb.core.find(idVendor=0x0483, idProduct=0xDF11, find_all=True, backend=backend))
+        if len(normal_devices) == 0 and len(dfu_devices) == 0:
             self.tabs.addTab(TabManagement(self.versionGUI), "No Board connected")
         else:
-            for device in devices:
+            for device in normal_devices:
                 self.tabs.addTab(TabManagement(self.versionGUI), f"Hardsploit #{device.address}")
+            for device in dfu_devices:
+                self.tabs.addTab(TabManagement(self.versionGUI), f"Hardsploit #{device.address} (DFU)")

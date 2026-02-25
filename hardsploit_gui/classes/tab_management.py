@@ -68,9 +68,13 @@ class TabManagement(QWidget):
 
     def set_hs_board_status(self, connected):
         if connected:
-            self.hardsploit_board_status.setText("Hardsploit board: connected " +
-                                                 f"- version {self._api.get_version_number()} " +
-                                                 f"- api V{HardsploitConstant.VERSION.API}")
+            if self._api.dfu:
+                self.hardsploit_board_status.setText("Hardsploit board: connected (DFU/bootloader mode) " +
+                                                     f"- api V{HardsploitConstant.VERSION.API}")
+            else:
+                self.hardsploit_board_status.setText("Hardsploit board: connected " +
+                                                     f"- version {self._api.get_version_number()} " +
+                                                     f"- api V{HardsploitConstant.VERSION.API}")
         else:
             self.hardsploit_board_status.setText("Hardsploit board: disconnected")
 
@@ -509,10 +513,14 @@ class TabManagement(QWidget):
     @Slot()
     def get_hardsploit_versions(self):
         if HardsploitUtils.get_number_of_board_available() > 0:
+            if self._api.dfu:
+                board_info = "DFU/bootloader mode"
+            else:
+                board_info = self._api.get_version_number()
             QMessageBox(QMessageBox.Information, 'Hardsploit versions',
                         f"GUI VERSION : {self.version_gui}\n" +
                         f"API VERSION : {HardsploitConstant.VERSION.API}\n" +
-                        f"BOARD : {self._api.get_version_number()}"
+                        f"BOARD : {board_info}"
                         ).exec_()
         else:
             QMessageBox(QMessageBox.Information, 'Hardsploit versions',
@@ -576,10 +584,16 @@ class TabManagement(QWidget):
         if HardsploitUtils.get_number_of_board_available() > 0:
             self._api = HardsploitAPI()
 
-            self.console.print(f"Hardsploit board detected GUI V{self.version_gui} "
-                               f"API V{HardsploitConstant.VERSION.API}"
-                               f" BOARD : {self._api.get_version_number()}")
-            self.console.print(f'Hardsploit #{self._api.dev.address} ready to suck chip souls !')
+            if self._api.dfu:
+                self.console.print(f"Hardsploit board detected in DFU/bootloader mode "
+                                   f"GUI V{self.version_gui} "
+                                   f"API V{HardsploitConstant.VERSION.API}")
+                self.console.print('DFU mode: only microcontroller firmware update is available.')
+            else:
+                self.console.print(f"Hardsploit board detected GUI V{self.version_gui} "
+                                   f"API V{HardsploitConstant.VERSION.API}"
+                                   f" BOARD : {self._api.get_version_number()}")
+                self.console.print(f'Hardsploit #{self._api.dev.address} ready to suck chip souls !')
             self.set_hs_board_status(True)
         else:
             self.console.print('Hardsploit board unconnected: '
